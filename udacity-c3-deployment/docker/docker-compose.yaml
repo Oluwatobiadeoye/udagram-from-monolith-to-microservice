@@ -9,7 +9,7 @@ services:
         - backend-user
         - backend-feed
   backend-user:
-    image: bjoebstl/udacity-restapi-user
+    image: bjoebstl/udacity-c3-restapi-user
     volumes:
       - $HOME/.aws:/root/.aws
     environment:
@@ -23,7 +23,7 @@ services:
       JWT_SECRET: $JWT_SECRET
       URL: "http://localhost:8100"
   backend-feed:
-    image: bjoebstl/udacity-restapi-feed
+    image: bjoebstl/udacity-c3-restapi-feed
     volumes:
       - $HOME/.aws:/root/.aws
     environment:
@@ -37,6 +37,6 @@ services:
       JWT_SECRET: $JWT_SECRET
       URL: "http://localhost:8100"
   frontend:
-    image: bjoebstl/udacity-frontend:local
+    image: bjoebstl/udacity-c3-frontend:local
     ports:
       - "8100:80"
