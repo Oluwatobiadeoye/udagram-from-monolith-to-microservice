@@ -38,7 +38,7 @@ describe('FeedListComponent', () => {
   });
 
   it('should display all of the fetched items', () => {
-    component.feedItems = feedItemMocks;
+    component.s = feedItemMocks;
     fixture.detectChanges();
     const app = fixture.nativeElement;
     const items = app.querySelectorAll('app-feed-item');
