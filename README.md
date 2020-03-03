@@ -78,6 +78,12 @@ AWS_PROFILE=__YOUR_AWS_PROFILE__
 
 ## Deploy on AWS
 
+### Prerequiste: Install K8s
+install kubeone (https://github.com/kubermatic/kubeone)
+
+```kubeone install config.yaml --tfjson tf.json```
+and export ```KUBECONFIG=$PWD/udagram-kubeconfig``` to your environment
+
 ### 1. Create a K8s cluster
 At first, add the following variables to your environment
 
@@ -86,6 +92,8 @@ AWS_SECRET_ACCESS_KEY=__YOUR_AWS_SECRET_ACCESS_KEY__
 Move to the directory ```deployment/k8s/infrastructure``` and run ```terraform init```
 
 Store the terraform variables below in a file named  ```terraform.tfvars```:
+
+Or just use EKSCLI
 
 ```
 cluster_name = "udagram"
@@ -100,8 +108,3 @@ Provision the infrastructure on AWS: ```terraform apply```
 Don't forget to enter yes shortly after running the command.
 When the file is created, it can be used by ```KubeOne```:
 ```terraform output -json > tf.json```
-
-### Install K8s
-
-```kubeone install config.yaml --tfjson tf.json```
-and export ```KUBECONFIG=$PWD/udagram-kubeconfig``` to your environment
