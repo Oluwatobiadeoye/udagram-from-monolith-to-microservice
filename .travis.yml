@@ -15,17 +15,14 @@ before_install:
   - chmod +x ./kubectl
   - sudo mv ./kubectl /usr/local/bin/kubectl
 
-install:
 
 jobs:
   include:
     - stage: build docker images
-      script:
+      install:
         - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml build --parallel 
     - stage: push images to docker registry
-      if: branch = master
-      script: 
+      install: 
         - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml push
     - stage: deploy to aws kluster
-      if: branch = master
       script: udacity-c3-deployment/k8s/deploy.sh
