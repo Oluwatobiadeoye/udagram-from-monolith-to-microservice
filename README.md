@@ -85,9 +85,7 @@ AWS_ACCESS_KEY_ID=__YOUR_AWS_ACCES_KEY_ID__
 AWS_SECRET_ACCESS_KEY=__YOUR_AWS_SECRET_ACCESS_KEY__
 Move to the directory ```deployment/k8s/infrastructure``` and run ```terraform init```
 
-Set your values for  ```aws_region``` and ```ssh_public_key_file``` in the file ```terraform.tfvars```.
-
-Store the terraform variables below in a file named terraform.tfvars:
+Store the terraform variables below in a file named  ```terraform.tfvars```:
 
 ```
 cluster_name = "udagram"
