@@ -25,7 +25,7 @@ jobs:
     - stage: push images to docker registry
       if: branch = master
       script: 
-        - docker-compose -f docker-compose-build.yaml push
+        - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml push
     - stage: deploy to aws kluster
       if: branch = master
       script: udacity-c3-deployment/k8s/deploy.sh
