@@ -18,11 +18,9 @@ before_install:
 
 jobs:
   include:
-    - stage: build docker images
+    - stage: build docker images, push to registry
       install:
-        - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml build --parallel 
-    - stage: push images to docker registry
-      install: 
+        - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml build --parallel
         - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml push
     - stage: deploy to aws kluster
       script: udacity-c3-deployment/k8s/deploy.sh
