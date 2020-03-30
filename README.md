@@ -71,7 +71,7 @@ AWS_PROFILE=__YOUR_AWS_PROFILE__
 ```
 
 ## Deploy locally
-1. `cd udacity-c3-deployment/docker`
+1. all deployment files can be found in `/udacity-c3-deployment/docker`
 1. Build the images: `docker-compose -f docker-compose-build.yaml build --parallel`
 2. Push the images: `docker-compose -f docker-compose-build.yaml push`
 3. Run the container: `docker-compose up`. The application will run on `localhost:8100`
