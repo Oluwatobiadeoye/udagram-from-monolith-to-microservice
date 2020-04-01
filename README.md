@@ -84,3 +84,7 @@ AWS_PROFILE=__YOUR_AWS_PROFILE__
 
 1. Create the cluster: `eksctl create cluster --name {{name}} --region {{region}}`
 2. Create travis-user: `eksctl create iamidentitymapping --name {{name}} --role arn:aws:iam::?:role/travis_eks --group system:masters --username travis_eks`
+
+
+### Running CI/CD
+- set environment variables for travis in order to push images to docker registry.
