@@ -21,9 +21,10 @@ before_install:
 jobs:
   include:
     - stage: build docker images and push to registry
-      - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml build --parallel
-      - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-      - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml push
+      install:
+        - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml build --parallel
+        - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml push
     - stage: deploy to AWS K8s Cluster
       script: udacity-c3-deployment/k8s/deploy.sh
 
