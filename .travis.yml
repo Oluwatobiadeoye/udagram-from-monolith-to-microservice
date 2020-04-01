@@ -23,7 +23,6 @@ jobs:
   include:
   - stage: build docker images, push to registry and deploy to cluster
     install:
-    - echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
     - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml build
       --parallel
     - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml push
