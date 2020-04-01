@@ -79,16 +79,8 @@ AWS_PROFILE=__YOUR_AWS_PROFILE__
 ## Deploy on AWS
 
 ### Prerequiste: Install K8s
-install kubeone (https://github.com/kubermatic/kubeone)
 
-```kubeone install config.yaml --tfjson tf.json```
-and export ```KUBECONFIG=$PWD/udagram-kubeconfig``` to your environment
+### Run K8s cluster with EKS CLI
 
-### 1. Create a K8s cluster with EKS CLI
-
-```
-cluster_name = "udagram"
-aws_region = "__YOUR_AWS_REGION__"
-worker_os = "ubuntu"
-ssh_public_key_file = "/Users/joebsbar/.ssh/id_rsa.pub"
-```
+1. Create the cluster: `eksctl create cluster --name {{name}} --region {{region}}`
+2. Create travis-user: `eksctl create iamidentitymapping --name {{name}} --role arn:aws:iam::?:role/travis_eks --group system:masters --username travis_eks`
