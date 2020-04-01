@@ -3,7 +3,16 @@ language: minimal
 services: docker
 
 env:
-  - DOCKER_COMPOSE_VERSION=1.23.2
+  global: 
+    - DOCKER_COMPOSE_VERSION=1.23.2
+    - KUBECTL_VERSION=1.13.7
+    - AWS_IAM_AUTHENTICATOR_VERSION=1.13.7
+    - SHA=$(git rev-parse HEAD)
+
+addons:
+  apt:
+    packages:
+      - python3-pip
 
 before_install:
   - docker -v && docker-compose -v
@@ -18,8 +27,10 @@ before_install:
 
 jobs:
   include:
-    - stage: build docker images and push to registry
+    - stage: build docker images, push to registry and deploy to cluster
       install:
+        - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml build --parallel
         - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml push
-    - stage: deploy to aws kluster
-      script: udacity-c3-deployment/k8s/deploy.sh
+        - udacity-c3-deployment/k8s/deploy.sh
+        on:
+          branch: master
