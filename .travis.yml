@@ -8,22 +8,23 @@ env:
   - SHA=$(git rev-parse HEAD)
   
   before_install:
-- docker -v && docker-compose -v
-- sudo rm /usr/local/bin/docker-compose
-- curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname
-  -s`-`uname -m` > docker-compose
-- chmod +x docker-compose
-- sudo mv docker-compose /usr/local/bin
-- curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-- chmod +x ./kubectl
-- sudo mv ./kubectl /usr/local/bin/kubectl
+    - docker -v && docker-compose -v
+    - sudo rm /usr/local/bin/docker-compose
+    - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname
+      -s`-`uname -m` > docker-compose
+    - chmod +x docker-compose
+    - sudo mv docker-compose /usr/local/bin
+    - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+    - chmod +x ./kubectl
+    - sudo mv ./kubectl /usr/local/bin/kubectl
 
-jobs:
-  include:
-  - stage: build docker images, push to registry and deploy to cluster
-    install:
+  script:
     - echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
-    - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml build
-      --parallel
+    - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml build --parallel
     - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml push
-    - udacity-c3-deployment/k8s/deploy.sh
+
+deploy:
+  - provider: script
+  script: bash udacity-c3-deployment/k8s/deploy.sh
+  on:
+    branch: master
