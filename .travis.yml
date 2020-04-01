@@ -6,10 +6,12 @@ env:
   - KUBECTL_VERSION=1.13.7
   - AWS_IAM_AUTHENTICATOR_VERSION=1.13.7
   - SHA=$(git rev-parse HEAD)
+  
   global:
   - secure: CAibsDJ91c+Zx19VpGKamndu2bZOO2qYyj5A55QtGGs6vGNQoksxHjB0/i2B0LO+V9imIMkHYp1rrzxta3h8VcEFMW6F9asgFg04y7mZ0Wv1aEpQ0LZB+9p3MT5ydNOxymJLyW5M7NjpeM0B7FaiTZPpCd4zlIye/0iDvcTB/rzC9lhECkllfZLyr2lsHIOTgiFfDoPkM3vKyDHitGtHFd5u7Z/5rKDoHJ8vBCTheMC7lwFnVRogOvMJ/hT/x8JL/NKZxfockMDsoBHd/Zp2pcB+OJpcMTQxKu8CMjKXExHpQB+Ke/SpK+yOolyxwrm/02HisHy2UgfK2tb/Hb/7uHipCse1iJYRXPHyWj4B0CZ/Z10/1igmL7hGtNRKGEB0eehQjTtFe4+kaaYYIqSa7vNviy3pG0dU7wodp7A4hjiU6h01Dd+dvbT34mqaaurZCnF/Lrcm4j5yfmZ/0ukVjoi1yCm70FmLqUtcGvHKNsLJHc7EYCzKnYJqFaadhoSj9hdSPeuWmtOP21jp2ngpXwZC1UJTD15jjd+P7NZa2Zg6odxXHRuv96NV3nwK4JM5sVlFAneTVTuWqBa/CanT1auyTGqIDYHftUM1TDxGrVLiZARI6w9dGLncCrhArB6swWZVZ/AByGW+i+i5LEkqxiZjMpjTo4amwx+9ideQo6I=
   - secure: ASijzrXdqxrPYG2xpHfD+18nRNb5iiOil69w4yDpDM7v930isJO0XZFvJHzmZCNl+e5G1BM0rUK75hlwHnNXfHCgUGWRqk/0NTfOhj0n6B5genjuXEhdLE9pT6TtkuaV5tmYMG4QiUU9w9JDMr5rgyP6rxN2IwNt0mazuUWxjqAT9uFJ3vKm7RHYPP0bayD4StoglBjQ/COpWieyf/vb6BxFJXR2FMgtxwdHVyD898d/xITBRBKA1ylkDIx89uDVDey1D341Ner3N1a5DHnCyhnxK6GSUFq+e6nldxNpGa2fNTrXeSFDKO8+q8xVkMJXIS1OUtUmqwcqwxMdMIS6qIQ6XIVX90TBkWKqpEz/CrCXEtHTV7chsg9EOVo1sKmuUcaTIBeqHHW5Z3qaEBxf2Tctf8JglXRXF/k+vS7rPYCZR+HtysrQGfqjAq2yeu4F9D382ArawhcZxGFpNS6f8BKNE1/Yuaf1Pkv4Q4TxHzIYBovSmn/KLU9zDvvu/V7ACYSpgxzQh5C+tC7ENMqWbG44+iKyIC8EHPjh4nKCkUAMVtuUGvbLxbLMDXd7weQJUeeVCM7HYoZ5EJsnJSq3PHFUroSPpwy6wAsD9be2SgsI1upSRbTEJ9u6XPn+viGX4TNhVb7I09uPLOQXUWYtefd+W8L5Sae/uZx/t+K0UK0=
-before_install:
+
+  before_install:
 - docker -v && docker-compose -v
 - sudo rm /usr/local/bin/docker-compose
 - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname
@@ -19,10 +21,12 @@ before_install:
 - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
 - chmod +x ./kubectl
 - sudo mv ./kubectl /usr/local/bin/kubectl
+
 jobs:
   include:
   - stage: build docker images, push to registry and deploy to cluster
     install:
+    - echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
     - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml build
       --parallel
     - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml push
