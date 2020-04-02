@@ -28,6 +28,6 @@ jobs:
     - stage: deploy
         deploy:
           provider: script 
-          script: bashudacity-c3-deployment/k8s/deploy.sh
+          script: bash udacity-c3-deployment/k8s/deploy.sh
         on: 
           branch: master
