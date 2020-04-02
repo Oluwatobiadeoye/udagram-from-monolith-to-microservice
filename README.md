@@ -40,6 +40,7 @@ Kubernetes helper for AWS: [terraform](https://www.terraform.io/), [kubeone](htt
     "Resource": "__YOUR_BUCKET_ARN__/*"
     }]
 }
+
 ```
 - Save this CORS configuration on AWS for your bucket:
 ```
@@ -83,8 +84,7 @@ AWS_PROFILE=__YOUR_AWS_PROFILE__
 ### Run K8s cluster with EKS CLI
 
 1. Create the cluster: `eksctl create cluster --name {{name}} --region {{region}}`
-2. Create travis-user: `eksctl create iamidentitymapping --name {{name}} --role arn:aws:iam::?:role/travis_eks --group system:masters --username travis_eks`
-
 
 ### Running CI/CD
 - set environment variables for travis in order to push images to docker registry.
+- when pushing to branch `master` the app is deployed to the K8s cluster. If needed change the app name in `deploy.sh`
