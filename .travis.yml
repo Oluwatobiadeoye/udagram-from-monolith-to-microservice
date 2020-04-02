@@ -25,7 +25,7 @@ jobs:
         - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml build --parallel
         - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml push
-    - stage: deploy
+    - stage: deploy to aws k8s cluster
         deploy:
           provider: script 
           script: bash udacity-c3-deployment/k8s/deploy.sh
